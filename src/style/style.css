@@ -1,0 +1,288 @@
+/*import fonts*/
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+/* style   */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6, p{
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    padding: 0;
+    margin: 0;
+}
+
+button, input{
+    background: transparent;
+    border:0;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+}
+/* container */
+.container{
+    max-width:1024px;
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+.container-two{
+    max-width: 380px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* width:100% */
+.w-full{
+    width: 100%;
+}
+
+/* height:100vh */
+.h-full{
+    height: 100%;
+}
+.h-screen{
+    height: 100vh;
+}
+
+/* text */
+.text-center{
+    text-align: center;
+}
+
+/* color */
+.color-white{
+    color: #FFFFFFDE;
+}
+.color-black{
+    color: rgba(0, 0, 0, 0.87);;
+}
+
+/*background  */
+.bg-yellow{
+    background-color: #F4E041;
+}
+.bg-white{
+    background-color: #ffff;
+}
+.bg-light-gray{
+    background-color: #F8F8F8;
+}
+
+.bg-light-gray-two{
+    background-color: #E5E5E5;
+}
+
+.bg-gray{
+    background-color: #B4B4B4;
+}
+
+.bg-blue{
+    background-color: #00BDD3;
+}
+
+/*background-image  */
+.bg-img{
+    background: rgba(0,0,0, 0.6) url("../assets//pexels-alexandr-podvalny-1227513.jpeg") no-repeat;
+    position: relative;
+}
+.bg-img::after{
+    position: absolute;
+    content: '';
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color:rgba(0,0,0, 0.5) ;
+}
+
+/* background */
+.bg-100{
+    background-size:100% 100%;
+}
+/* border */
+.border-1{
+    border: 1px solid #00BDD3
+}
+
+/* border-radius */
+.border-radius{
+    border-radius:80px;
+}
+
+/* padding */
+.p-29{
+    padding: 8px 29px;
+}
+
+.p-22{
+    padding: 8px 22px;
+}
+.pt-50{
+    padding-top: 50px;
+}
+.pt-140{
+    padding-top: 140px;
+}
+
+/* margin */
+.mr-10{
+    margin-left: 10px;
+}
+.mr-13{
+    margin: 13px 0;
+}
+.mt-50{
+    margin-top: 50px;
+}
+
+/* display */
+
+.flex{
+    display: flex;
+}
+.flex-wrap{
+    flex-wrap: wrap;
+}
+
+/* justify */
+.justify-start{
+    justify-content: flex-start;
+}
+.justify-end{
+    justify-content: flex-end;
+}
+.justify-center{
+    justify-content: center;
+}
+.justify-between{
+    justify-content: space-between;
+}
+.justify-around{
+    justify-content: space-around;
+}
+.justify-evenly{
+    justify-content: space-evenly;
+}
+
+/* items */
+.items-start{
+    align-items: flex-start;
+}
+.items-end{
+    align-items: flex-end;
+}
+.items-center{
+    align-items: center;
+}
+.items-baseline	{
+    align-items: baseline;
+}
+.items-stretch{
+    align-items: stretch;
+}
+
+/* position */
+.absolute{
+    position: absolute;
+}
+.relative{
+    position: relative;
+}
+
+/* left */
+.left-0{
+    left: 0;
+}
+
+/* top */
+.top{
+    top:0;
+}
+
+/* Z-Index */
+.z-10{
+    z-index: 10;
+}
+.z-20{
+    z-index: 20;
+}
+.z-30{
+    z-index: 30;
+}
+.z-40{
+    z-index: 40;
+}
+.z-50{
+    z-index: 50;
+}
+/* ////////////// inter//////////////////////////// */
+.intro-header{
+    font-size: 40px;
+    line-height: 40px;
+    margin-bottom: 1.313rem;
+}
+
+.intro-text{
+    line-height: 26px;
+    margin-bottom: 2rem;
+}
+/* ////// working //////// */
+
+.working-title{
+    font-size: 2.5rem;
+    line-height: 40px;
+}
+
+/* media 1024 */
+
+@media (max-width: 1024px) {
+    .container{
+        max-width: 1024px;
+       
+    }
+}
+
+/* media 768px */
+
+@media (max-width: 768px) {
+    .container{
+        max-width: 768px;
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+
+    /* bg-100 */
+    .bg-100 {
+        background-size: cover;
+    }
+}
+
+/* media 360px */
+
+@media (max-width: 360px) {
+    .container{
+        max-width: 360px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    .container-two{
+        max-width: 300px;
+        
+    }
+    
+}
