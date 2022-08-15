@@ -2,16 +2,23 @@
     <section class="bg-light-gray-two">
         <div class="container pt-140">
             <h1 class="color-black text-center working-title">Working with GET request</h1>
-            <div class="mt-50">
-                <div class="flex cards-block flex-wrap mlb-30">
-                    <vueWorkingCard v-for="user in users[0]" :key="user.id" :user="user" />
+            <div class=" mt-50" v-if="users.length === 0">
+               <Loading/>
+            </div>
+            <div v-else>
+                <div class="mt-50">
+                    <div class="flex cards-block flex-wrap mlb-30">
+                        <vueWorkingCard v-for="user in users" :key="user.id" :user="user" />
+                    </div>
                 </div>
-            </div>
-            <div class=" mt-50" v-if="loading[1]">
-                <Loading />
-            </div>
-            <div class="flex justify-center mt-50" v-else>
-                <button @click="ShowMore()" class="bg-yellow p-22 border-radius">Show more</button>
+                <div class="mt-50" v-if="loading">
+                    <Loading />
+                </div>
+                <div v-else>
+                    <div class="flex justify-center mt-50" v-if="hiddenBtn">
+                        <button @click="ShowMore()" class="bg-yellow p-22 border-radius">Show more </button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -20,6 +27,7 @@
 import vueWorkingCard from './vueWorkingCard.vue';
 import { getUsers } from '../api/api.js';
 import Loading from '../components/Loading.vue'
+import { Fetching } from '@/api/Fetching'
 export default {
     name: 'vueWorking',
     components: {
@@ -29,51 +37,52 @@ export default {
     data() {
         return {
             users: [],
-            total_users: [],
-            count: 6,
-            loading: false
+            total_users: 0,
+            limitCount: 6,
+            page: 1,
+            total_count: 0,
+            loading: null,
+            hiddenBtn: true
         }
     },
     methods: {
-        async Users(count, loading) {
+        Users() {
+            const [fetching, isLoading, errorMsg] = Fetching(async () => {
+                const response = await getUsers(this.limitCount, this.page);
+                this.total_users = response.total_users;
+                this.users = response.users;
+                this.hiddenButton(this.total_users)
+                
 
-             this.users = [...await getUsers(count, loading)]
-             this.loading = [...await getUsers(count, loading)]
-             this.total_users = [...await getUsers(count, loading)]
+            })
+            fetching()
+            this.loading = isLoading;
+            console.log(errorMsg)
         },
         ShowMore() {
-            this.count = this.count += 6;
-            this.Users(this.count, this.loading);
+            this.limitCount = this.limitCount += 6;
+            this.Users();
         },
-        // buttonHidden(){
-        //     this.total_users = this.total_users[2].total_users - this.count 
-        //      console.log(this.total_users > 0)
-        //     return this.total_users > 0
-        // }
-    },
-    computed:{
-    //    buttonHidden(){
-    //    return  (this.total_users[2].total_users - this.count) > 0
-    //    },
-    //    hidden(){
-    //    return this.total_users = this.buttonHidden()
-    //    }
+        hiddenButton(total_users) {
+            let total_userss = total_users -= this.limitCount
+            console.log(total_userss)
+            if (total_userss >= 0) {
+                this.hiddenBtn = true;
+            } else {
+                this.hiddenBtn = false;
+            }
+
+        }
     },
     created() {
         this.Users();
-        this.hidden
-    }
+    },
 }
 </script>
 
 <style>
 .cards-block {
     justify-content: center;
-}
-
-.block-test {
-    height: 10vh;
-    background-color: red;
 }
 
 .mlb-30 {

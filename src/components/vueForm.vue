@@ -3,53 +3,100 @@
         <div class="container">
             <h1 class="color-black text-center working-title color-black">Working with POST request</h1>
             <div class="container-two">
-                <form @submit.prevent="postForm()">
-                    <input id="" type="text" v-model="form.name" required placeholder="form.name" />
-                    <input id="" type="text" v-model="form.email" required placeholder="form.email" />
-                    <input id="" type="text" v-model="form.phone" required placeholder="form.phone" />
-                    <input id="" type="number" v-model="form.position_id" required placeholder="form.position_id" />
-                    <input type="file" @change="onFileSelected($event)" id="" />
-                    <button type="submit">Submit</button>
+                <form @submit.prevent="postForm()" class="pt-50">
+                    <div class="">
+                        <input type="text" class="w-full p-input border-input bg-white-input" required
+                            placeholder="Your name" v-model="form.name">
+                    </div>
+                    <div class="pt-50">
+                        <input type="text" class="w-full p-input border-input bg-white-input" required
+                            placeholder="Email" v-model="form.email">
+                    </div>
+                    <div class="pt-50">
+                        <input type="text" class="w-full p-input border-input bg-white-input" required
+                            placeholder="Phone" v-model="form.phone" id="phone">
+                        <label for="phone " class="lable-phone color-gray color-black">+38 (XXX) XXX - XX - XX</label>
+                    </div>
+
+                    <div class="mt-25">
+                        <h4 class="title-radio">Select your position</h4>
+                        <div class="container-radio" v-for="position in positions" :key="position.id">
+                            <input type="radio" class="hidden" :id="`input${position.id}`" v-model="position_id"
+                                @click="PositionId(position.id)" name="inputs">
+                            <label class="entry" :for='`input${position.id}`'>
+                                <div class="circle"></div>
+                                <div class="entry-label">{{ position.name }}</div>
+                            </label>
+
+                            <div class="highlight"></div>
+                            <div class="overlay"></div>
+                        </div>
+                    </div>
+
+                    <div class="upload mt-50">
+                        <input type="file" class="input-image" @change="onFileSelected($event)" ref="fileImg"
+                            accept="image/jpeg">
+                        <div class="upload-block">
+                            <button type="button" class="uploadBtn" @click="$refs.fileImg.click()">Upload</button>
+                            <div v-if="!form.photo.name" class="upload-photo">Upload your photo</div>
+                            <div v-else class="upload-photo">{{ form.photo.name }}</div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-50">
+                        <button type="submit" class="p-22 bg-gray border-radius color-white">Sing-up</button>
+                    </div>
                 </form>
-                
             </div>
         </div>
     </section>
 </template>
 <script>
-
-import axios from 'axios';
+import { Fetching } from '@/api/Fetching';
+import { getToken, postUsers, getPositions } from '../api/api'
 export default {
     name: 'vueForm',
     data() {
         return {
             form: {
-                name: "JastinsTest",
-                email: "Bestsd@gmail.com",
-                phone: "+380968749215",
+                name: "",
+                email: "",
+                phone: "",
                 photo: [],
-                positions: "Security",
-                position_id: 2,
+                position_id: null,
             },
             token: null,
+            positions: [],
         }
     },
     methods: {
-        async Token() {
-            try {
-                const response = await fetch(
-                    "https://frontend-test-assignment-api.abz.agency/api/v1/token"
-                );
-                const data = await response.json();
+        Positions() {
+            const [fetching, isLoading, errorMsg] = Fetching(async () => {
+                const data = await getPositions();
+                this.positions = data.positions;
+                console.log(this.positions)
+            })
 
-                this.token = data.token;
-                console.log(this.token);
-            } catch (error) {
-                console.log(error);
-            }
+            fetching();
+            console.log(isLoading);
+            console.log(errorMsg)
+
+        },
+        PositionId(id) {
+            this.form.position_id = id;
         },
         onFileSelected(event) {
             this.form.photo = event.target.files[0];
+        },
+        Token() {
+            const [fetching, isLoading, errorMsg] = Fetching(async () => {
+                const data = await getToken();
+                this.token = data.token;
+            })
+
+            fetching();
+            console.log(isLoading);
+            console.log(errorMsg)
+
         },
         postForm() {
             const formData = new FormData();
@@ -57,27 +104,29 @@ export default {
                 formData.append(key, this.form[key]);
                 console.log(this.form[key])
             });
-            axios({
-                method: "POST",
-                url: "https://frontend-test-assignment-api.abz.agency/api/v1/users",
-                headers: {
-                    Token: this.token,
-                },
-                data: formData,
+
+            const [fetching, isLoading, errorMsg] = Fetching(async () => {
+                const data = await postUsers(formData, this.token);
+                console.log(data);
+                this.form.name = '';
+                this.form.email = '';
+                this.form.phone = '';
+                this.form.photo = [];
+                this.form.position_id = null;
+
+
             })
-                .then((response) => {
-                    console.log(response.data);
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.log(error.response);
-                });
-                console.log(formData)
+            fetching();
+            console.log(isLoading);
+            console.log(errorMsg)
+
         },
+
     },
     created() {
 
         this.Token();
+        this.Positions()
 
         // this.Positions();
     }
@@ -251,7 +300,7 @@ export default {
 
 
 
-input:invalid {
+/* input:invalid {
     border: 2px dashed red;
 }
 
@@ -261,5 +310,32 @@ input:invalid:required {
 
 input:valid {
     border: 2px solid black;
+} */
+
+.input-image {
+    display: none;
+}
+
+.upload-block {
+    display: flex;
+    width: 100%;
+}
+
+.uploadBtn {
+    padding: 15px;
+    background: #E5E5E5;
+    color: rgba(0, 0, 0, 0.87);
+    border: 1px solid rgba(0, 0, 0, 0.87);
+    border-radius: 4px 0px 0px 4px;
+}
+
+.upload-photo {
+    color: #7E7E7E;
+    border: 1px solid #D0CFCF;
+    border-radius: 4px;
+    padding-left: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 100%;
 }
 </style>
