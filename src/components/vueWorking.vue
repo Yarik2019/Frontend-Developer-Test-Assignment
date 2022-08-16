@@ -3,7 +3,7 @@
         <div class="container pt-140">
             <h1 class="color-black text-center working-title">Working with GET request</h1>
             <div class=" mt-50" v-if="users.length === 0">
-               <Loading/>
+                <Loading />
             </div>
             <div v-else>
                 <div class="mt-50">
@@ -52,8 +52,6 @@ export default {
                 this.total_users = response.total_users;
                 this.users = response.users;
                 this.hiddenButton(this.total_users)
-                
-
             })
             fetching()
             this.loading = isLoading;

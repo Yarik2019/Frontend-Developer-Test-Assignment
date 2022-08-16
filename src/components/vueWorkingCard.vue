@@ -71,20 +71,20 @@ export default {
     position: relative;
 }
 
-.block >.email-hover {
+.block>.email-hover {
     opacity: 0;
     background: rgba(0, 0, 0, 0.87);
     color: #fff;
     border-radius: 4px;
     padding: 5px 16px;
     position: absolute;
-    
+
     bottom: -5px;
     left: -50;
     transition: 0.3s linear;
 }
 
-.block:hover > .email {
+.block:hover>.email {
     opacity: 1;
     cursor: pointer;
 

@@ -79,7 +79,6 @@ export default {
             fetching();
             console.log(isLoading);
             console.log(errorMsg)
-
         },
         PositionId(id) {
             this.form.position_id = id;
@@ -96,7 +95,6 @@ export default {
             fetching();
             console.log(isLoading);
             console.log(errorMsg)
-
         },
         postForm() {
             const formData = new FormData();
@@ -113,22 +111,16 @@ export default {
                 this.form.phone = '';
                 this.form.photo = [];
                 this.form.position_id = null;
-
-
             })
             fetching();
             console.log(isLoading);
             console.log(errorMsg)
-
         },
 
     },
     created() {
-
         this.Token();
         this.Positions()
-
-        // this.Positions();
     }
 
 }
@@ -175,12 +167,12 @@ export default {
     line-height: 14px;
 }
 
+
+/* radio button */
+
 .title-radio {
     font-size: 1rem;
 }
-
-
-
 
 .check {
     bottom: 0;
@@ -299,19 +291,7 @@ export default {
 }
 
 
-
-/* input:invalid {
-    border: 2px dashed red;
-}
-
-input:invalid:required {
-    background-image: linear-gradient(to right, pink, lightgreen);
-}
-
-input:valid {
-    border: 2px solid black;
-} */
-
+/* upload img  */
 .input-image {
     display: none;
 }

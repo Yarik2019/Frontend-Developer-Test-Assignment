@@ -1,9 +1,9 @@
 <template>
   <div>
-    <VueNav/>
-    <vueIntro/>
-    <VueWorking/>
-    <vueForm/>
+    <VueNav />
+    <vueIntro />
+    <VueWorking />
+    <vueForm />
   </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
     VueIntro,
     VueWorking,
     vueForm
-}
+  }
 }
 </script>
 
