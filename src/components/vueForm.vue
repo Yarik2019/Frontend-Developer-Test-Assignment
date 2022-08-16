@@ -73,7 +73,6 @@ export default {
             const [fetching, isLoading, errorMsg] = Fetching(async () => {
                 const data = await getPositions();
                 this.positions = data.positions;
-                console.log(this.positions)
             })
 
             fetching();
