@@ -82,6 +82,9 @@ export default {
     bottom: -5px;
     left: -50;
     transition: 0.3s linear;
+
+    overflow-x: scroll;
+    width: 100%;
 }
 
 .block:hover>.email {
